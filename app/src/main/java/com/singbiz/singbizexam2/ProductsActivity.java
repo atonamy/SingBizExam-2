@@ -260,6 +260,15 @@ public class ProductsActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
+        PlaceholderFragment fragment = PlaceholderFragment.entities.get(0);
+
+        for(int position : PlaceholderFragment.entities.keySet()) {
+            if(position == 0 && PlaceholderFragment.entities.get(position) != null)
+                PlaceholderFragment.entities.get(position).setControlButton(deleteItem);
+            else if(PlaceholderFragment.entities.get(position) != null)
+                PlaceholderFragment.entities.get(position).setControlButton(checkoutItem);
+        }
+
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -336,8 +345,9 @@ public class ProductsActivity extends AppCompatActivity {
             currentSearch = null;
         }
 
-        public void setContext(ProductsActivity context) {
-            currentContext = context;
+        public void setControlButton(MenuItem button) {
+            if(productAdapter != null)
+                productAdapter.setControlButton(button);
         }
 
         /**
@@ -346,7 +356,6 @@ public class ProductsActivity extends AppCompatActivity {
          */
         public static PlaceholderFragment newInstance(ProductsActivity context, int sectionNumber) {
             PlaceholderFragment fragment = new PlaceholderFragment();
-            fragment.setContext(context);
             Bundle args = new Bundle();
             if(sectionNumber >= 2) {
                 args.putInt(ARG_SECTION_TYPE, 2);
@@ -667,7 +676,6 @@ public class ProductsActivity extends AppCompatActivity {
                 updateFragment();
             }
         }
-
 
         private void showCheckoutDialog(final ProductItem product, final int position) {
 

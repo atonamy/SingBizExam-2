@@ -63,6 +63,10 @@ public class ProductListAdapter extends ArrayAdapter<ProductItem> {
         currentFooter = null;
     }
 
+    public void setControlButton(MenuItem control_button) {
+        controlButton = control_button;
+    }
+
     public void setFooter(View footer) {
         currentFooter = footer;
     }
