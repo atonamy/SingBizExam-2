@@ -116,8 +116,8 @@ public class ProductsActivity extends AppCompatActivity {
     }*/
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onStart() {
+        super.onStart();
         populateContext();
     }
 
@@ -374,10 +374,9 @@ public class ProductsActivity extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
 
-            if(currentContext == null)
-                return null;
-
             final View rootView = inflater.inflate(R.layout.fragment_products, container, false);
+            if(currentContext == null)
+                return rootView;
             currentDb = new SingBizDatabase(getActivity());
             emptyMessage = (TextView)rootView.findViewById(R.id.textViewEmpty);
             loadingText = (TextView)rootView.findViewById(R.id.textViewLoading);
