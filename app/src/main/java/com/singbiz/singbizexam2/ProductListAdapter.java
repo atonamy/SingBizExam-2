@@ -284,7 +284,7 @@ public class ProductListAdapter extends ArrayAdapter<ProductItem> {
         CheckoutContainer.discountRule1(allProducts);
         BigDecimal rule2 = CheckoutContainer.discountRule2(allProducts);
         CheckoutContainer.discountRule3(allProducts);
-        if(rule2.compareTo(BigDecimal.ZERO) == 0)
+        if(rule2.compareTo(BigDecimal.valueOf(50.0)) == -1)
             CheckoutContainer.discountRule4(allProducts);
     }
 
