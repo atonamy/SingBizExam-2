@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Sing Biz Exam #2</string>
+    <string name="action_settings">Proceed to checkout...</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="search_title">Search product...</string>
+
+</resources>
