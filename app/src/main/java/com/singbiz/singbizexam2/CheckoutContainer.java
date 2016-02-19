@@ -157,9 +157,9 @@ public class CheckoutContainer {
         int day = calendar.get(Calendar.DAY_OF_MONTH);
 
         if(month == Calendar.DECEMBER && day >= 20 && day <= 28) {
+            final double discount = 15.0;
             for(ProductItem product : products) {
                 if (product.productCategory == ProductItem.PRODUCT_CATEGORY.E && product.getProductFinalDiscount() < 15) {
-                    double discount = product.productPrice - 15.0;
                     double sub_total = discount * product.getProductQuantity();
                     result = result.add(BigDecimal.valueOf(sub_total));
                     product.setProductFinalDiscount(discount);
