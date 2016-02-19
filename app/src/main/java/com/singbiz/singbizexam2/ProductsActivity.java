@@ -115,11 +115,7 @@ public class ProductsActivity extends AppCompatActivity {
         ////
     }*/
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        populateContext();
-    }
+
 
     @Override
     public void onBackPressed() {
@@ -297,12 +293,6 @@ public class ProductsActivity extends AppCompatActivity {
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
 
-        populateContext();
-    }
-
-    protected void populateContext() {
-        for(PlaceholderFragment fragment : PlaceholderFragment.entities.values())
-            fragment.setContext(this);
     }
 
     /**
@@ -333,7 +323,7 @@ public class ProductsActivity extends AppCompatActivity {
         private Button emptyButton;
         private ProductListAdapter productAdapter;
         private SingBizDatabase currentDb;
-        ProductsActivity currentContext;
+        private ProductsActivity currentContext;
         private Map.Entry<Integer, ProductItem.PRODUCT_CATEGORY> currentSection;
         private String currentSearch;
         private View footerView = null;
@@ -374,6 +364,8 @@ public class ProductsActivity extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
 
+            if(currentContext == null)
+                currentContext = (ProductsActivity)getActivity();
             final View rootView = inflater.inflate(R.layout.fragment_products, container, false);
             int section_type = getArguments().getInt(ARG_SECTION_TYPE);
             emptyMessage = (TextView)rootView.findViewById(R.id.textViewEmpty);
@@ -388,10 +380,6 @@ public class ProductsActivity extends AppCompatActivity {
 
             int index = currentSection.getKey() + ((currentSection.getValue().ordinal() > 0) ? currentSection.getValue().ordinal() -1 : 0);
             entities.put(index, this);
-
-            if(currentContext == null) {
-                return rootView;
-            }
 
             currentDb = new SingBizDatabase(getActivity());
 

@@ -219,7 +219,6 @@ public class ProductListAdapter extends ArrayAdapter<ProductItem> {
         }
         deletedItems.clear();
         savedCheckbox.clear();
-        CheckoutContainer.clearDiscounts(allProducts);
         applyAutomaticDiscount();
         notifyDataSetChanged();
         controlButton.setVisible(false);
@@ -281,10 +280,12 @@ public class ProductListAdapter extends ArrayAdapter<ProductItem> {
     }
 
     public void applyAutomaticDiscount() {
+        CheckoutContainer.clearDiscounts(allProducts);
         CheckoutContainer.discountRule1(allProducts);
-        CheckoutContainer.discountRule2(allProducts);
+        BigDecimal rule2 = CheckoutContainer.discountRule2(allProducts);
         CheckoutContainer.discountRule3(allProducts);
-        CheckoutContainer.discountRule4(allProducts);
+        if(rule2.compareTo(BigDecimal.ZERO) == 0)
+            CheckoutContainer.discountRule4(allProducts);
     }
 
     public boolean isNoSelection() {
