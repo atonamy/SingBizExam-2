@@ -3,6 +3,7 @@ package com.singbiz.singbizexam2;
 import android.content.Context;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -192,9 +193,12 @@ public class CheckoutContainer {
 
             result = result.add(BigDecimal.valueOf(50.0));
             category_A.addAll(category_B);
-            double discount = 50.0 / category_A.size();
+            BigDecimal totalSize = BigDecimal.ZERO;
             for(ProductItem product : category_A)
-                if(product.getProductFinalDiscount() < discount)
+                totalSize = totalSize.add(BigDecimal.valueOf(product.getProductQuantity()));
+            double discount = BigDecimal.valueOf(50).divide(totalSize, MathContext.DECIMAL64).doubleValue();
+            for(ProductItem product : category_A)
+                if (product.getProductFinalDiscount() < discount)
                     product.setProductFinalDiscount(discount);
         }
 
