@@ -260,8 +260,6 @@ public class ProductsActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
-        PlaceholderFragment fragment = PlaceholderFragment.entities.get(0);
-
         for(int position : PlaceholderFragment.entities.keySet()) {
             if(position == 0 && PlaceholderFragment.entities.get(position) != null)
                 PlaceholderFragment.entities.get(position).setControlButton(deleteItem);
