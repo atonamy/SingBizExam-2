@@ -92,11 +92,6 @@ public class CheckoutContainer {
             checkoutContent.put(product.productId, product);
     }
 
-    public BigDecimal calculateAutomaticDiscount() {
-        return null;
-    }
-
-
     public boolean isEmpty() {
         return (checkoutContent.size() == 0);
     }
