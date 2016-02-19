@@ -375,25 +375,33 @@ public class ProductsActivity extends AppCompatActivity {
                                  Bundle savedInstanceState) {
 
             final View rootView = inflater.inflate(R.layout.fragment_products, container, false);
-            if(currentContext == null)
-                return rootView;
-            currentDb = new SingBizDatabase(getActivity());
+            int section_type = getArguments().getInt(ARG_SECTION_TYPE);
             emptyMessage = (TextView)rootView.findViewById(R.id.textViewEmpty);
             loadingText = (TextView)rootView.findViewById(R.id.textViewLoading);
             productList = (ListView) rootView.findViewById(R.id.listViewProducts);
             emptyButton = (Button) rootView.findViewById(R.id.buttonEmpty);
-            int section_type = getArguments().getInt(ARG_SECTION_TYPE);
             currentSection = new AbstractMap.SimpleEntry<>(section_type,
-                        ProductItem.PRODUCT_CATEGORY.values()[getArguments().getInt(ARG_CATEGORY_TYPE)]);
+                    ProductItem.PRODUCT_CATEGORY.values()[getArguments().getInt(ARG_CATEGORY_TYPE)]);
+            jumpingBeans = JumpingBeans.with(loadingText)
+                    .appendJumpingDots()
+                    .build();
+
+            int index = currentSection.getKey() + ((currentSection.getValue().ordinal() > 0) ? currentSection.getValue().ordinal() -1 : 0);
+            entities.put(index, this);
+
+            if(currentContext == null) {
+                return rootView;
+            }
+
+            currentDb = new SingBizDatabase(getActivity());
+
 
             productAdapter = (currentSection.getKey() == 0) ?
                             new ProductListAdapter(productList, new ArrayList<ProductItem>(), currentContext.deleteItem) :
                             new ProductListAdapter(productList, new ArrayList<ProductItem>(), currentContext.checkoutItem);
             productList.setAdapter(productAdapter);
 
-            jumpingBeans = JumpingBeans.with(loadingText)
-                    .appendJumpingDots()
-                    .build();
+
 
 
             emptyButton.setOnClickListener(new View.OnClickListener() {
@@ -465,8 +473,7 @@ public class ProductsActivity extends AppCompatActivity {
                 firstTime = false;
                 (new Thread(populateProducts)).start();
             }
-            int index = currentSection.getKey() + ((currentSection.getValue().ordinal() > 0) ? currentSection.getValue().ordinal() -1 : 0);
-            entities.put(index, this);
+
             return rootView;
         }
 
