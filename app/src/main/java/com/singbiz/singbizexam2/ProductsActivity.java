@@ -423,7 +423,9 @@ public class ProductsActivity extends AppCompatActivity {
                     }else if(totalItemCount == 0)
                         currentContext.buttonUp.setVisibility(View.GONE);
 
-                    if (currentContext != null && currentContext.mViewPager.getCurrentItem() == currentSection.getKey() && !animatingProcess && totalItemCount > 0 && currentContext.buttonUp.getVisibility() == View.VISIBLE &&
+                    if (currentContext != null && currentContext.mViewPager != null &&
+                            currentContext.mViewPager.getCurrentItem() == currentSection.getKey() &&
+                            !animatingProcess && totalItemCount > 0 && currentContext.buttonUp.getVisibility() == View.VISIBLE &&
                             ((firstVisibleItem + visibleItemCount) >= totalItemCount || firstVisibleItem < 10)) {
 
                         animatingProcess = true;
@@ -437,7 +439,9 @@ public class ProductsActivity extends AppCompatActivity {
                             }
                         }, 1500);
 
-                    } else if (currentContext != null && currentContext.mViewPager.getCurrentItem() == currentSection.getKey() && !animatingProcess && totalItemCount > 0 && currentContext.buttonUp.getVisibility() == View.GONE &&
+                    } else if (currentContext != null && currentContext.mViewPager != null &&
+                            currentContext.mViewPager.getCurrentItem() == currentSection.getKey() &&
+                            !animatingProcess && totalItemCount > 0 && currentContext.buttonUp.getVisibility() == View.GONE &&
                              firstVisibleItem >= 10 && (firstVisibleItem + visibleItemCount) < totalItemCount) {
 
                         animatingProcess = true;
