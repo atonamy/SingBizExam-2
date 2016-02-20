@@ -420,7 +420,8 @@ public class ProductsActivity extends AppCompatActivity {
                         listUpdated = true;
                         if (populateProducts != null)
                             (new Thread(populateProducts)).start();
-                    }
+                    }else if(totalItemCount == 0)
+                        currentContext.buttonUp.setVisibility(View.GONE);
 
                     if (currentContext != null && currentContext.mViewPager.getCurrentItem() == currentSection.getKey() && !animatingProcess && totalItemCount > 0 && currentContext.buttonUp.getVisibility() == View.VISIBLE &&
                             ((firstVisibleItem + visibleItemCount) >= totalItemCount || firstVisibleItem < 10)) {
