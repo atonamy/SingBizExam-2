@@ -371,8 +371,7 @@ public class ProductsActivity extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
 
-            if(currentContext == null)
-                currentContext = (ProductsActivity)getActivity();
+            currentContext = (ProductsActivity)getActivity();
             final View rootView = inflater.inflate(R.layout.fragment_products, container, false);
             int section_type = getArguments().getInt(ARG_SECTION_TYPE);
             emptyMessage = (TextView)rootView.findViewById(R.id.textViewEmpty);
@@ -423,9 +422,8 @@ public class ProductsActivity extends AppCompatActivity {
                             (new Thread(populateProducts)).start();
                     }
 
-                    if (currentContext != null && !animatingProcess && totalItemCount > 0 && currentContext.buttonUp.getVisibility() == View.VISIBLE &&
+                    if (currentContext != null && currentContext.mViewPager.getCurrentItem() == currentSection.getKey() && !animatingProcess && totalItemCount > 0 && currentContext.buttonUp.getVisibility() == View.VISIBLE &&
                             ((firstVisibleItem + visibleItemCount) >= totalItemCount || firstVisibleItem < 10)) {
-
 
                         animatingProcess = true;
                         playAnimation(currentContext.buttonUp, 1000, false);
@@ -438,7 +436,7 @@ public class ProductsActivity extends AppCompatActivity {
                             }
                         }, 1500);
 
-                    } else if (currentContext != null && !animatingProcess && totalItemCount > 0 && currentContext.buttonUp.getVisibility() == View.GONE &&
+                    } else if (currentContext != null && currentContext.mViewPager.getCurrentItem() == currentSection.getKey() && !animatingProcess && totalItemCount > 0 && currentContext.buttonUp.getVisibility() == View.GONE &&
                              firstVisibleItem >= 10 && (firstVisibleItem + visibleItemCount) < totalItemCount) {
 
                         animatingProcess = true;
