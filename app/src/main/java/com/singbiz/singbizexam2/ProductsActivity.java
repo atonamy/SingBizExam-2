@@ -394,6 +394,7 @@ public class ProductsActivity extends AppCompatActivity {
             productAdapter = (currentSection.getKey() == 0) ?
                             new ProductListAdapter(productList, new ArrayList<ProductItem>(), currentContext.deleteItem) :
                             new ProductListAdapter(productList, new ArrayList<ProductItem>(), currentContext.checkoutItem);
+            generateSummary(true);
             productList.setAdapter(productAdapter);
 
 
@@ -521,7 +522,7 @@ public class ProductsActivity extends AppCompatActivity {
                             if (data.size() == PAGE_SIZE)
                                 listUpdated = false;
                             if (currentSection.getKey() == 0)
-                                generateSummary();
+                                generateSummary(false);
                         }
                         if (!can_add && currentPage == 0 && currentContext != null && currentSection.getKey() != 0 && currentSearch == null)
                             currentContext.populateProducts(currentContext.getResources().openRawResource(R.raw.data));
@@ -566,10 +567,14 @@ public class ProductsActivity extends AppCompatActivity {
             }
         }
 
-        protected void generateSummary() {
+        protected void generateSummary(boolean init) {
             if(footerView != null)
                 productList.removeFooterView(footerView);
-            footerView =  ((LayoutInflater)currentContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.product_footer, null, false);
+            footerView = ((LayoutInflater)currentContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.product_footer, null, false);
+            if(init)
+                footerView.setVisibility(View.GONE);
+            else
+                footerView.setVisibility(View.VISIBLE);
             productList.addFooterView(footerView, null, false);
             productAdapter.setFooter(footerView);
         }
@@ -607,7 +612,7 @@ public class ProductsActivity extends AppCompatActivity {
                                 emptyButton.setVisibility(View.GONE);
                                 productAdapter.addAll(products);
                                 productAdapter.applyAutomaticDiscount();
-                                generateSummary();
+                                generateSummary(false);
                                 if(play)
                                     playAnimation(productList, 500, true);
                             }
