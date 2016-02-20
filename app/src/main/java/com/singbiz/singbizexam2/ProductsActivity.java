@@ -416,9 +416,9 @@ public class ProductsActivity extends AppCompatActivity {
 
                 @Override
                 public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                    if (totalItemCount > 0 && (firstVisibleItem + visibleItemCount) + 30 >= totalItemCount && !listUpdated) {
+                    if (!listUpdated && totalItemCount > 0 && ((firstVisibleItem + visibleItemCount) + 30 >= totalItemCount)) {
                         listUpdated = true;
-                        if (populateProducts != null)
+                        if (populateProducts != null && currentPage > 0) //2117800
                             (new Thread(populateProducts)).start();
                     }else if(totalItemCount == 0)
                         currentContext.buttonUp.setVisibility(View.GONE);
