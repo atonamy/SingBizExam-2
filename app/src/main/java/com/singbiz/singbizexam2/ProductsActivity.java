@@ -98,6 +98,7 @@ public class ProductsActivity extends AppCompatActivity {
                 PlaceholderFragment fragment = PlaceholderFragment.entities.get(mViewPager.getCurrentItem());
                 if(fragment != null)
                     fragment.scrollUp();
+
             }
         });
 
@@ -367,6 +368,10 @@ public class ProductsActivity extends AppCompatActivity {
             return fragment;
         }
 
+        private static int sectionToIndex(Map.Entry<Integer, ProductItem.PRODUCT_CATEGORY> section) {
+            return section.getKey() + ((section.getValue().ordinal() > 0) ? section.getValue().ordinal() -1 : 0);
+        }
+
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
@@ -378,13 +383,13 @@ public class ProductsActivity extends AppCompatActivity {
             loadingText = (TextView)rootView.findViewById(R.id.textViewLoading);
             productList = (ListView) rootView.findViewById(R.id.listViewProducts);
             emptyButton = (Button) rootView.findViewById(R.id.buttonEmpty);
-            currentSection = new AbstractMap.SimpleEntry<>(section_type,
-                    ProductItem.PRODUCT_CATEGORY.values()[getArguments().getInt(ARG_CATEGORY_TYPE)]);
+            ProductItem.PRODUCT_CATEGORY category = ProductItem.PRODUCT_CATEGORY.values()[getArguments().getInt(ARG_CATEGORY_TYPE)];
+            currentSection = new AbstractMap.SimpleEntry<>(section_type, category);
             jumpingBeans = JumpingBeans.with(loadingText)
                     .appendJumpingDots()
                     .build();
 
-            int index = currentSection.getKey() + ((currentSection.getValue().ordinal() > 0) ? currentSection.getValue().ordinal() -1 : 0);
+            int index = sectionToIndex(currentSection);
             entities.put(index, this);
 
             currentDb = new SingBizDatabase(getActivity());
@@ -424,7 +429,7 @@ public class ProductsActivity extends AppCompatActivity {
                         currentContext.buttonUp.setVisibility(View.GONE);
 
                     if (currentContext != null && currentContext.mViewPager != null &&
-                            currentContext.mViewPager.getCurrentItem() == currentSection.getKey() &&
+                            currentContext.mViewPager.getCurrentItem() == sectionToIndex(currentSection) &&
                             !animatingProcess && totalItemCount > 0 && currentContext.buttonUp.getVisibility() == View.VISIBLE &&
                             ((firstVisibleItem + visibleItemCount) >= totalItemCount || firstVisibleItem < 10)) {
 
@@ -440,7 +445,7 @@ public class ProductsActivity extends AppCompatActivity {
                         }, 1500);
 
                     } else if (currentContext != null && currentContext.mViewPager != null &&
-                            currentContext.mViewPager.getCurrentItem() == currentSection.getKey() &&
+                            currentContext.mViewPager.getCurrentItem() == sectionToIndex(currentSection) &&
                             !animatingProcess && totalItemCount > 0 && currentContext.buttonUp.getVisibility() == View.GONE &&
                              firstVisibleItem >= 10 && (firstVisibleItem + visibleItemCount) < totalItemCount) {
 
@@ -475,7 +480,6 @@ public class ProductsActivity extends AppCompatActivity {
 
             return rootView;
         }
-
 
         private Runnable populateProducts = new Runnable() {
             @Override
