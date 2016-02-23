@@ -102,7 +102,7 @@ public class CheckoutContainer {
         Calendar calendar = Calendar.getInstance();
         int week = calendar.get(Calendar.DAY_OF_WEEK);
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
-        if(week == Calendar.WEDNESDAY && hour >= 14 && hour <= 18) {
+        if(week == Calendar.WEDNESDAY && hour >= 14 && (hour < 18 || (calendar.get(Calendar.MINUTE) == 0 && hour == 18))) {
             for(ProductItem product : products)
             {
                 double discount = ProductListAdapter.calculateDiscount(product.productPrice, 10.0);
