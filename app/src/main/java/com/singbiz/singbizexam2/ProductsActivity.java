@@ -550,7 +550,8 @@ public class ProductsActivity extends AppCompatActivity {
                         else
                             emptyButton.setVisibility(View.GONE);
 
-                        if (currentContext.mViewPager.getCurrentItem() != 0 && checkout != null && !checkout.isEmpty())
+                        if (currentContext.mViewPager != null && currentContext.mViewPager.getCurrentItem() != 0 &&
+                                checkout != null && !checkout.isEmpty())
                             currentContext.checkoutItem.setVisible(true);
 
                     }
