@@ -280,7 +280,6 @@ public class ProductsActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_checkout) {
-            searchItem.collapseActionView();
             mViewPager.setCurrentItem(0);
             return true;
         }
