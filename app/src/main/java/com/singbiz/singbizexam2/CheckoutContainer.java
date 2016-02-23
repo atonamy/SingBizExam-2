@@ -105,7 +105,7 @@ public class CheckoutContainer {
         if(week == Calendar.WEDNESDAY && hour >= 14 && (hour < 18 || (calendar.get(Calendar.MINUTE) == 0 && hour == 18))) {
             for(ProductItem product : products)
             {
-                double discount = ProductListAdapter.calculateDiscount(product.productPrice, 10.0);
+                double discount = ProductListAdapter.calculateDiscount(product.productPrice, 10.0, true);
                 if(product.getProductFinalDiscount() < discount) {
                     double sub_total = discount * product.getProductQuantity();
                     result = result.add(BigDecimal.valueOf(sub_total));
@@ -133,7 +133,7 @@ public class CheckoutContainer {
         if(compare == 0 || compare == 1) {
             for(ProductItem product : category_B)
             {
-                double discount = ProductListAdapter.calculateDiscount(product.productPrice, 40.0);
+                double discount = ProductListAdapter.calculateDiscount(product.productPrice, 40.0, false);
                 if(product.getProductFinalDiscount() < discount) {
                     double sub_total = discount * product.getProductQuantity();
                     result = result.add(BigDecimal.valueOf(sub_total));

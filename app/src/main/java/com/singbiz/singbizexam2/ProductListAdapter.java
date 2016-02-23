@@ -177,7 +177,7 @@ public class ProductListAdapter extends ArrayAdapter<ProductItem> {
 
             double discount = ((productItem.getProductDiscount() == null) ? 0 :
                     productItem.getProductDiscount().doubleValue());
-            double final_discount  = calculateDiscount(productItem.productPrice, discount);
+            double final_discount  = calculateDiscount(productItem.productPrice, discount, true);
             if(productItem.getProductFinalDiscount() < final_discount)
                 productItem.setProductFinalDiscount(final_discount);
             product_gst.setText("GST: +S$" + currency.format(calculateGST(productItem.productPrice - productItem.getProductFinalDiscount())));
@@ -275,12 +275,12 @@ public class ProductListAdapter extends ArrayAdapter<ProductItem> {
     }
 
     protected static double calculateGST(double price) {
-        return calculateDiscount(price, 7);
+        return calculateDiscount(price, 7, false);
     }
 
-    public static double calculateDiscount(double price, double discount) {
-        double gst = price / 100.0 * discount;
-        return (double)Math.round(gst * 100.0)/100.0;
+    public static double calculateDiscount(double price, double discount, boolean round) {
+        double value = price / 100.0 * discount;
+        return (round) ? (double)Math.round(value * 100.0)/100.0 : value;
     }
 
     public void applyAutomaticDiscount() {
